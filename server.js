@@ -22,7 +22,7 @@ app.post("/login", (req, res) => {
     const loginData = req.body;
     const responseData = { success: "No" };
     // Checking Username with password
-    const query = `select data from users where username="${loginData.username}" and password="${loginData.password}";`;
+    const query = `select data from users where username="` + loginData.username + `" and password="` + loginData.password + `";`;
     pool.query(query, (err, result) => {
         if (err) {
             console.log("DataBase Query Error: " + err);
