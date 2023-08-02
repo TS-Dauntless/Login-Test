@@ -8,6 +8,16 @@ const pool = new Pool({
     port: 5432,
 });
 
+const deleteTableQuery = "DROP TABLE your_table_name;";
+
+pool.query(deleteTableQuery, (err, result) => {
+    if (err) {
+        console.error("Error executing delete table query:", err);
+    } else {
+        console.log("Table deleted successfully!");
+    }
+});
+
 const createTableQuery =
     "CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, data VARCHAR(255));";
 
