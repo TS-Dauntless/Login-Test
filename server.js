@@ -5,10 +5,10 @@ const mysql = require("mysql2");
 
 // Database
 const connection = mysql.createConnection({
-    host: "sql304.infinityfree.com",
-    user: "if0_34731891",
-    password: "@InfinityFree",
-    database: "if0_34731891_user_details",
+    host: "dpg-cj5650oeba7s73dq4t1g-a",
+    user: "ts",
+    password: "lfmXMcGvOGijK6TcLCKZI3hEVFNndbW1",
+    database: "user_details_abap",
 });
 
 // Server
