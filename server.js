@@ -20,26 +20,27 @@ app.use(bodyParser.json());
 
 app.post("/login", (req, res) => {
     const loginData = req.body;
+    const userIP = req.ip;
     const responseData = { success: "No" };
     // Checking Username with password
     const query = `select data from users where username='${loginData.username}' and password='${loginData.password}';`;
-    console.log(query);
+    // console.log(query);
     pool.query(query, (err, result) => {
         if (err) {
-            console.log("DataBase Query Error: " + err);
+            console.log(userIP + " " + "DataBase Query Error: " + err);
             res.json(responseData);
         } else {
-            console.log(result);
+            // console.log(userIP + " " + result);
             if (result.rowCount == 0) {
-                console.log("Username Password Mismatch");
+                console.log(userIP + " " + "Username Password Mismatch");
                 responseData["success"] = "Mismatch";
                 res.json(responseData);
             } else if (result.rowCount != 1) {
-                console.log("Something went wrong in database");
+                console.log(userIP + " " + "Something went wrong in database");
                 responseData["success"] = "DataBase Error";
                 res.json(responseData);
             } else {
-                console.log("Success");
+                console.log(userIP + " " + "Success");
                 responseData["message"] = result.rows[0].data;
                 responseData["success"] = "Yes";
                 res.json(responseData);
