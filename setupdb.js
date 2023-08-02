@@ -8,7 +8,7 @@ const pool = new Pool({
     port: 5432,
 });
 
-const deleteTableQuery = "DROP TABLE your_table_name;";
+const deleteTableQuery = "DROP TABLE users;";
 
 pool.query(deleteTableQuery, (err, result) => {
     if (err) {
