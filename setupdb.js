@@ -8,44 +8,33 @@ const pool = new Pool({
     port: 5432,
 });
 
-const deleteTableQuery = "DROP TABLE users;";
-
-pool.query(deleteTableQuery, (err, result) => {
-    if (err) {
-        console.error("Error executing delete table query:", err);
-    } else {
-        console.log("Table deleted successfully!");
-    }
-});
-
-const createTableQuery =
-    "CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, data VARCHAR(255));";
-
-pool.query(createTableQuery, (err, result) => {
-    if (err) {
-        console.error("Error executing Table query:", err);
-    } else {
-        console.log("Table Created successfully!");
-    }
-});
-
+const deleteTableQuery = "DROP TABLE IF EXISTS users;";
+const createTableQuery = "CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, data VARCHAR(255));";
 const insertQuery = `INSERT INTO users (username, password, data) VALUES ('aswath', 'aswathpass', 'vanakam da aswathe...');`;
-
-pool.query(insertQuery, (err, result) => {
-    if (err) {
-        console.error("Error executing insert query:", err);
-    } else {
-        console.log("Data inserted successfully!");
-    }
-});
-
 const selectQuery = "SELECT * FROM users;";
 
-pool.query(selectQuery, (err, result) => {
-    if (err) {
-        console.error("Error executing select query:", err);
-    } else {
+(async () => {
+    try {
+        // Delete table if exists
+        await pool.query(deleteTableQuery);
+        console.log("Table deleted successfully!");
+
+        // Create table
+        await pool.query(createTableQuery);
+        console.log("Table created successfully!");
+
+        // Insert data
+        await pool.query(insertQuery);
+        console.log("Data inserted successfully!");
+
+        // Select and display data
+        const result = await pool.query(selectQuery);
         console.log(result.rows);
-        console.log("Data Displayed successfully!");
+        console.log("Data displayed successfully!");
+    } catch (err) {
+        console.error("Error:", err);
+    } finally {
+        // Release the pool when done
+        pool.end();
     }
-});
+})();
