@@ -29,6 +29,7 @@ app.post("/login", (req, res) => {
             console.log("DataBase Query Error: " + err);
             res.json(responseData);
         } else {
+            console.log(result);
             if (result.length == 0) {
                 console.log("Username Password Mismatch");
                 responseData["success"] = "Mismatch";
