@@ -8,10 +8,10 @@ const pool = new Pool({
     port: 5432,
 });
 
-let query =
+const createTableQuery =
     "CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, data VARCHAR(255));";
 
-pool.query(query, (err, result) => {
+pool.query(createTableQuery, (err, result) => {
     if (err) {
         console.error("Error executing Table query:", err);
     } else {
@@ -19,12 +19,23 @@ pool.query(query, (err, result) => {
     }
 });
 
-query = `INSERT INTO users (username, password, data) VALUES ('aswath', 'aswathpass', 'vanakam da aswathe...');`;
+const insertQuery = `INSERT INTO users (username, password, data) VALUES ('aswath', 'aswathpass', 'vanakam da aswathe...');`;
 
-pool.query(query, (err, result) => {
+pool.query(insertQuery, (err, result) => {
     if (err) {
         console.error("Error executing insert query:", err);
     } else {
         console.log("Data inserted successfully!");
+    }
+});
+
+const selectQuery = "SELECT * FROM users;";
+
+pool.query(selectQuery, (err, result) => {
+    if (err) {
+        console.error("Error executing select query:", err);
+    } else {
+        console.log(result.rows);
+        console.log("Data Displayed successfully!");
     }
 });
