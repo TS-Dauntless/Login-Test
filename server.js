@@ -30,17 +30,17 @@ app.post("/login", (req, res) => {
             res.json(responseData);
         } else {
             console.log(result);
-            if (result.length == 0) {
+            if (result.rowCount == 0) {
                 console.log("Username Password Mismatch");
                 responseData["success"] = "Mismatch";
                 res.json(responseData);
-            } else if (result.length != 1) {
+            } else if (result.rowCount != 1) {
                 console.log("Something went wrong in database");
                 responseData["success"] = "DataBase Error";
                 res.json(responseData);
             } else {
                 console.log("Success");
-                responseData["message"] = result[0].data;
+                responseData["message"] = result.rows[0].data;
                 responseData["success"] = "Yes";
                 res.json(responseData);
             }
