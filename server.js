@@ -1,14 +1,15 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-const mysql = require("mysql2");
+const { Pool } = require("pg");
 
 // Database
-const connection = mysql.createConnection({
+const pool = new Pool({
     host: "dpg-cj5650oeba7s73dq4t1g-a",
     user: "ts",
     password: "lfmXMcGvOGijK6TcLCKZI3hEVFNndbW1",
     database: "user_details_abap",
+    port: 5432,
 });
 
 // Server
@@ -23,7 +24,7 @@ app.post("/login", (req, res) => {
     const responseData = { success: "No" };
     // Checking Username with password
     const query = `select data from users where username="${loginData.username}" and password="${loginData.password}";`;
-    connection.query(query, (err, result) => {
+    pool.query(query, (err, result) => {
         if (err) {
             console.log(displayInfo(clientIp) + "DataBase Query Error: " + err);
             res.json(responseData);
